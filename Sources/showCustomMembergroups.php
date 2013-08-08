@@ -8,10 +8,10 @@
  * @copyright Copyright (c) 2013, Jessica González
  * @license http://www.mozilla.org/MPL/2.0/
  */
- 
+
 if (!defined('SMF'))
 	die('No direct access...');
-	
+
 function sCM_modifications(&$sub_actions)
 {
 	global $context;
@@ -27,15 +27,7 @@ function sCM_admin_areas(&$areas)
 	if (!isset($txt['sCM_main']))
 		loadLanguage('showCustomMembergroups');
 
-	$areas['config']['areas']['sCM'] = array(
-		'label' => $txt['sCM_main'],
-		'file' => 'showCustomMembergroups.php',
-		'function' => 'sCM_index',
-		'icon' => 'administration.gif',
-		'subsections' => array(
-			'general' => array($txt['sCM_admin_title_general']),
-			'manageAwards' => array($txt['sCM_admin_title']),
-			'manageImages' => array($txt['sCM_admin_title']),
-		),
-	);
+	// ManageAttachments.php doesn't have a single hook on it so I can't add this section there... :(
+	$areas['config']['areas']['modsettings']['subsections']['sCM'] = array($txt['sCM_setting_pageTitle']);
+
 }
