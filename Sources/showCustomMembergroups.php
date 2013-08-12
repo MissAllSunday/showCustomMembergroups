@@ -24,7 +24,7 @@ function sCM_admin_areas(&$areas)
 {
 	global $txt;
 
-	if (!isset($txt['sCM_main']))
+	if (!isset($txt['sCM_title'] ))
 		loadLanguage('showCustomMembergroups');
 
 	// ManageAttachments.php doesn't have a single hook on it so I can't add this section there... :(
@@ -42,7 +42,7 @@ function sCM_settings(&$return_config = false)
 		return $config_vars;
 
 	$context['post_url'] = $scripturl . '?action=admin;area=modsettings;save;sa=sCM';
-	$context['settings_title'] = $txt['faqmod_title_main'];
+	$context['settings_title'] = $txt['sCM_title'] ;
 
 	if (empty($config_vars))
 	{
