@@ -31,3 +31,34 @@ function sCM_admin_areas(&$areas)
 	$areas['config']['areas']['modsettings']['subsections']['sCM'] = array($txt['sCM_setting_pageTitle']);
 
 }
+
+function sCM_settings(&$return_config = false)
+{
+	global $context, $scripturl, $txt;
+
+	$config_vars = array();
+
+	if ($return_config)
+		return $config_vars;
+
+	$context['post_url'] = $scripturl . '?action=admin;area=modsettings;save;sa=sCM';
+	$context['settings_title'] = $txt['faqmod_title_main'];
+
+	if (empty($config_vars))
+	{
+		$context['settings_save_dont_show'] = true;
+		$context['settings_message'] = '<div align="center">' . $txt['modification_no_misc_settings'] . '</div>';
+
+		return prepareDBSettingContext($config_vars);
+	}
+
+	if (isset($_GET['save']))
+	{
+		checkSession();
+		$save_vars = $config_vars;
+		saveDBSettings($save_vars);
+		redirectexit('action=admin;area=modsettings;sa=sCM');
+	}
+
+	prepareDBSettingContext($config_vars);
+}
