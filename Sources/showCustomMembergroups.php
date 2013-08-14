@@ -36,7 +36,9 @@ function sCM_settings(&$return_config = false)
 {
 	global $context, $scripturl, $txt;
 
-	$config_vars = array();
+	$config_vars = array(
+		array('text', 'sCM_groups_ids', 'size' => 22, 'subtext' => $txt['sCM_groups_ids_sub']),
+	);
 
 	if ($return_config)
 		return $config_vars;
@@ -62,3 +64,5 @@ function sCM_settings(&$return_config = false)
 
 	prepareDBSettingContext($config_vars);
 }
+
+
