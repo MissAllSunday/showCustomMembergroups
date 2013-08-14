@@ -2,56 +2,18 @@
 <!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
 
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
-	<id>Suki:OAward</id>
+	<id>Suki:showCustomMembergroups</id>
+	<name>Show Custom Membergroups mod</name>
 	<version>1.0</version>
 
-	<file name="$sourcedir/Display.php">
+	<file name="$sourcedir/Load.php">
 		<operation>
-			<search position="replace"><![CDATA[// Set the callback.  (do you REALIZE how much memory all the messages would take?!?)]]></search>
-			<add><![CDATA[// OAward mod
-	if (!empty($modSettings['OAward_admin_enable']))
-		OAward::setHeaders();
-	// OAward mod end
-
-	// Set the callback.  (do you REALIZE how much memory all the messages would take?!?)]]></add>
+			<search position="replace"><![CDATA[]]></search>
+			<add><![CDATA[]]></add>
 		</operation>
 		<operation>
-			<search position="replace"><![CDATA[// Is this user the message author?]]></search>
-			<add><![CDATA[// OAward mod
-	if (!empty($modSettings['OAward_admin_enable']))
-	{
-		// Load this user's awards
-		$OAward = new OAward($message['id_member']);
-		$output['member']['custom_fields']['-1'] = $OAward->showAwards($output);
-		ksort($output['member']['custom_fields']);
-	}
-	// OAward mod end
-
-	// Is this user the message author?]]></add>
+			<search position="replace"><![CDATA[]]></search>
+			<add><![CDATA[]]></add>
 		</operation>
 	</file>
-
-	<file name="$sourcedir/Profile.php">
-		<operation>
-			<search position="replace"><![CDATA['value' => $value,
-		);
-	}
-	$smcFunc['db_free_result']($request);]]></search>
-			<add><![CDATA['value' => $value,
-		);
-	}
-	$smcFunc['db_free_result']($request);
-
-	// Oaward mod
-	global $modSettings;
-	if (!empty($modSettings['OAward_admin_enable']))
-	{
-		OAward::setHeaders();
-		$OAward = new OAward($memID);
-		$context['custom_fields']['-1'] = $OAward->showProfileAwards($memID);
-	}
-	// OAward mod end]]></add>
-		</operation>
-	</file>
-
 </modification>
