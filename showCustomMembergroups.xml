@@ -32,4 +32,34 @@
 			// Show avatars, images, etc.?]]></add>
 		</operation>
 	</file>
+
+	<file name="$themedir/Profile.template.php">
+		<operation>
+			<search position="replace"><![CDATA[// Are there any custom profile fields for the summary?
+]]></search>
+			<add><![CDATA[// Show the additional membergroups
+	if (!empty($context['member']['additional_groups']))
+	{
+		if (!isset($txt['sCM_title'] ))
+			loadLanguage('showCustomMembergroups');
+
+		echo '
+				<dl class="noborder">
+					<dt>', $txt['sCM_ui'] , ': </dt>
+					<dd>
+						<ul class="reset">';
+
+		foreach ($context['member']['additional_groups'] as $additional)
+			echo '
+							<li><span style="padding:5px 5px 0 0;">', $additional['image'] ,'</span><span ', !empty($additional['color']) ? 'style="color:'. $additional['color'] .';"' : '' ,'>', $additional['name'] ,'</span></li>';
+
+		echo '
+						</ul>
+					</dd>
+				</dl>';
+	}
+
+	// Are there any custom profile fields for the summary?]]></add>
+		</operation>
+	</file>
 </modification>
