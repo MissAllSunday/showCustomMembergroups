@@ -72,7 +72,7 @@ function getMemberGroups($allGroups, $id_member)
 	if (empty($allGroups))
 		return false;
 
-	$groups = array_intersect(!empty($modSettings['sCM_groups_ids']) ? $modSettings['sCM_groups_ids'] : array(), $allGroups);
+	$groups = !empty($modSettings['sCM_groups_ids']) ? array_intersect(explode(',', $modSettings['sCM_groups_ids']), $allGroups) : $allGroups;
 
 	if (($returnedGroups = cache_get_data('sCM_groups-'. $id_member, 120)) == null)
 	{
@@ -80,9 +80,10 @@ function getMemberGroups($allGroups, $id_member)
 			SELECT id_group, group_name, online_color, stars
 			FROM {db_prefix}membergroups
 			WHERE id_group IN ({array_int:groups})
+				AND id_group != 3
 			ORDER BY id_group',
 			array(
-				'groups' => explode(',', $groups),
+				'groups' => $groups,
 			)
 		);
 
@@ -97,6 +98,7 @@ function getMemberGroups($allGroups, $id_member)
 				'color' => $row['online_color'],
 				'star' => $stars[1],
 				'star_number' => $stars[0],
+				'star_raw' => $row['stars'],
 				'image' => '<img src="'. $settings['images_url'] .'/'. $stars[1] .'" />',
 			);
 		}
