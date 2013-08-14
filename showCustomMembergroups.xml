@@ -8,7 +8,7 @@
 
 	<file name="$sourcedir/Load.php">
 		<operation>
-			<search position="replace"><![CDATA[]]></search>
+			<search position="replace"><![CDATA[// Are we loading any moderators?  If so, fix their group data...]]></search>
 			<add><![CDATA[]]></add>
 		</operation>
 		<operation>
