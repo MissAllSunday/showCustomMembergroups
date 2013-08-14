@@ -20,4 +20,16 @@
 			<add><![CDATA[]]></add>
 		</operation>
 	</file>
+
+	<file name="$themedir/Display.template.php">
+		<operation>
+			<search position="replace"><![CDATA[// Show avatars, images, etc.?]]></search>
+			<add><![CDATA[// Show the additional membergroups
+			if (!empty($message['member']['additional_groups']))
+				foreach ($message['member']['additional_groups'] as $additional)
+					echo '<li><span style="padding:5px 5px 0 0;">', $additional['image'] ,'</span><span ', !empty($additional['color']) ? 'style="color:'. $additional['color'] .';"' : '' ,'>', $additional['name'] ,'</span></li>';
+
+			// Show avatars, images, etc.?]]></add>
+		</operation>
+	</file>
 </modification>
