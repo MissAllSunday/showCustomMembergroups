@@ -56,6 +56,18 @@ function sCM_settings(&$return_config = false)
 
 	if (isset($_GET['save']))
 	{
+		// Clean the IDs var, we want integers only!
+		if (!empty($_POST['sCM_groups_ids']))
+		{
+			$sCM_groups_ids = explode(',', preg_replace('/[^0-9,]/', '', $_POST['sCM_groups_ids']));
+
+			foreach ($sCM_groups_ids as $key => $value)
+				if ($value == '')
+					unset($sCM_groups_ids[$key]);
+
+			$_POST['sCM_groups_ids'] = implode(',', $sCM_groups_ids);
+		}
+
 		checkSession();
 		$save_vars = $config_vars;
 		saveDBSettings($save_vars);
