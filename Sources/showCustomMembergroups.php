@@ -89,12 +89,17 @@ function getMemberGroups($allGroups, $id_member)
 		$returnedGroups = array();
 
 		while ($row = $smcFunc['db_fetch_assoc']($request))
+		{
+			$stars = empty($row['stars']) ? array('', '') : explode('#', $row['stars']);
+
 			$returnedGroups[$row['id_group']] = array(
 				'name' => $row['group_name'],
 				'color' => $row['online_color'],
-				'star' => $row['stars'],
-				'image' => '<img src="'. $settings['images_url'] .'/'. $row['stars'] .'" />',
+				'star' => $stars[1],
+				'star_number' => $stars[0],
+				'image' => '<img src="'. $settings['images_url'] .'/'. $stars[1] .'" />',
 			);
+		}
 
 		$smcFunc['db_free_result']($request);
 
