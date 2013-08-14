@@ -8,8 +8,12 @@
 
 	<file name="$sourcedir/Load.php">
 		<operation>
-			<search position="replace"><![CDATA[// Are we loading any moderators?  If so, fix their group data...]]></search>
-			<add><![CDATA[]]></add>
+			<search position="replace"><![CDATA[// Do we have any languages to validate this?]]></search>
+			<add><![CDATA[/ showCustomMembergroups mod
+	require_once($sourcedir .'/showCustomMembergroups.php')
+	$user_info['additional_groups'] = getMemberGroups($user_info['groups'], $id_member);
+
+	// Do we have any languages to validate this?]]></add>
 		</operation>
 		<operation>
 			<search position="replace"><![CDATA[]]></search>
