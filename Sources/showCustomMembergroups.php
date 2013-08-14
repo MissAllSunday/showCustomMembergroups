@@ -65,4 +65,38 @@ function sCM_settings(&$return_config = false)
 	prepareDBSettingContext($config_vars);
 }
 
+function getMemberGroups()
+{
+	global $smcFunc, $modSettings, $settings;
 
+	$groups = !empty($modSettings['sCM_groups_ids']) ? $modSettings['sCM_groups_ids'] : array();
+
+	if (($returnedGroups = cache_get_data('sCM_groups-', 120)) == null)
+	{
+		$request = $smcFunc['db_query']('', '
+			SELECT id_group, group_name, online_color, stars
+			FROM {db_prefix}membergroups
+			WHERE id_group IN ({array_int:groups})
+			ORDER BY id_group',
+			array(
+				'groups' => explode(',', $groups),
+			)
+		);
+
+		$returnedGroups = array();
+
+		while ($row = $smcFunc['db_fetch_assoc']($request))
+			$returnedGroups[$row['id_group']] = array(
+				'name' => $row[''],
+				'color' => $row[''],
+				'star' => $row[''],
+			);
+
+		$smcFunc['db_free_result']($request);
+
+		// Cache this beauty
+		cache_put_data('sCM_groups-', $return, 120);
+	}
+
+	return $returnedGroups;
+}
