@@ -87,15 +87,16 @@ function getMemberGroups()
 
 		while ($row = $smcFunc['db_fetch_assoc']($request))
 			$returnedGroups[$row['id_group']] = array(
-				'name' => $row[''],
-				'color' => $row[''],
-				'star' => $row[''],
+				'name' => $row['group_name'],
+				'color' => $row['online_color'],
+				'star' => $row['stars'],
+				'image' => '<img src="'. $settings['images_url'] .'/'. $row['stars'] .'" />',
 			);
 
 		$smcFunc['db_free_result']($request);
 
 		// Cache this beauty
-		cache_put_data('sCM_groups-', $return, 120);
+		cache_put_data('sCM_groups-', $returnedGroups, 120);
 	}
 
 	return $returnedGroups;
