@@ -69,7 +69,7 @@ function getMemberGroups($allGroups, $id_member)
 {
 	global $smcFunc, $modSettings, $settings;
 
-	if (empty($allGroups))
+	if (empty($allGroups) || empty($id_member))
 		return false;
 
 	$groups = !empty($modSettings['sCM_groups_ids']) ? array_intersect(explode(',', $modSettings['sCM_groups_ids']), $allGroups) : $allGroups;
@@ -95,7 +95,7 @@ function getMemberGroups($allGroups, $id_member)
 
 			$returnedGroups[$row['id_group']] = array(
 				'name' => $row['group_name'],
-				'color' => $row['online_color'],
+				'color' => !empty($row['online_color']) ? $row['online_color'] : '',
 				'star' => $stars[1],
 				'star_number' => $stars[0],
 				'star_raw' => $row['stars'],
