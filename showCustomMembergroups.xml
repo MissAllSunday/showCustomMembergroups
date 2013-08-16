@@ -16,10 +16,6 @@
 
 	// First do a quick run through to make sure there is something to be shown.]]></add>
 		</operation>
-		<operation>
-			<search position="replace"><![CDATA[]]></search>
-			<add><![CDATA[]]></add>
-		</operation>
 	</file>
 
 	<file name="$themedir/Display.template.php">
@@ -36,9 +32,12 @@
 
 	<file name="$themedir/Profile.template.php">
 		<operation>
-			<search position="replace"><![CDATA[// Are there any custom profile fields for the summary?
-]]></search>
-			<add><![CDATA[// Show the additional membergroups
+			<search position="replace"><![CDATA[</dl>';
+
+	// Are there any custom profile fields for the summary?]]></search>
+			<add><![CDATA[</dl>';
+
+	// Show the additional membergroups
 	if (!empty($context['member']['additional_groups']))
 	{
 		if (!isset($txt['sCM_title'] ))
