@@ -8,12 +8,13 @@
 
 	<file name="$sourcedir/Load.php">
 		<operation>
-			<search position="replace"><![CDATA[// Do we have any languages to validate this?]]></search>
-			<add><![CDATA[/ showCustomMembergroups mod
-	require_once($sourcedir .'/showCustomMembergroups.php')
-	$user_info['additional_groups'] = getMemberGroups($user_info['groups'], $id_member);
+			<search position="replace"><![CDATA[// First do a quick run through to make sure there is something to be shown.]]></search>
+			<add><![CDATA[// showCustomMembergroups mod
+	global $sourcedir;
+	require_once($sourcedir .'/showCustomMembergroups.php');
+	$memberContext[$user]['additional_groups'] = getMemberGroups($user_info['groups'], $user);
 
-	// Do we have any languages to validate this?]]></add>
+	// First do a quick run through to make sure there is something to be shown.]]></add>
 		</operation>
 		<operation>
 			<search position="replace"><![CDATA[]]></search>

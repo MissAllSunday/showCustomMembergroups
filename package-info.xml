@@ -7,17 +7,15 @@
 	<type>modification</type>
 
 	<install for="2.0 - 2.0.99">
-		<database>install.php</database>
 		<code>hooks.php</code>
 		<modification>showCustomMembergroups.xml</modification>
 		<require-dir name="Themes" destination="$boarddir">Theme files</require-dir>
 		<require-dir name="Sources" destination="$boarddir">Source files</require-dir>
-		<redirect url="$scripturl?action=admin;area=modsettings;sa=sCM" timeout="3000">redirect.txt</redirect>
+		<redirect url="$scripturl?action=admin;area=modsettings;sa=sCM" timeout="3000"></redirect>
 	</install>
 
 	<uninstall for="2.0 - 2.0.99">
 		<code>remove.php</code>
-		<database>install.php</database>
 		<remove-file name="$sourcedir/showCustomMembergroups.php" />
 		<remove-file name="$languagedir/showCustomMembergroups.english.php" />
 		<modification reverse="true">showCustomMembergroups.xml</modification>
