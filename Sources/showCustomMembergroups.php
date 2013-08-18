@@ -81,10 +81,12 @@ function getMemberGroups($userGroups)
 {
 	global $smcFunc, $modSettings, $settings;
 
-	if (empty($allGroups) || empty($id_member))
+	if (empty($userGroups))
 		return false;
 
-	if (($returnedGroups = cache_get_data('sCM_groups-'. $id_member, 120)) == null)
+	$return = array();
+
+	if (($returnedGroups = cache_get_data('sCM_groups', 120)) == null)
 	{
 		$request = $smcFunc['db_query']('', '
 			SELECT id_group, group_name, online_color, stars
@@ -93,7 +95,7 @@ function getMemberGroups($userGroups)
 				AND id_group != 3
 			ORDER BY id_group',
 			array(
-				'groups' => !empty($modSettings['sCM_groups_ids']) ? $modSettings['sCM_groups_ids'] : array(),
+				'groups' => !empty($modSettings['sCM_groups_ids']) ? explode(',', $modSettings['sCM_groups_ids']) : '',
 			)
 		);
 
@@ -116,8 +118,12 @@ function getMemberGroups($userGroups)
 		$smcFunc['db_free_result']($request);
 
 		// Cache this beauty
-		cache_put_data('sCM_groups-'. $id_member, $returnedGroups, 120);
+		cache_put_data('sCM_groups', $returnedGroups, 120);
 	}
 
-	return array_intersect($returnedGroups, $userGroups);
+	foreach ($userGroups as $group)
+		if (!empty($returnedGroups[$group]))
+			$return[$group] = $returnedGroups[$group];
+
+	return $return;
 }
