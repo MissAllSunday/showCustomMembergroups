@@ -12,7 +12,7 @@
 			<add><![CDATA[// showCustomMembergroups mod
 	global $sourcedir;
 	require_once($sourcedir .'/showCustomMembergroups.php');
-	$memberContext[$user]['additional_groups'] = getMemberGroups($user_info['groups'], $user);
+	$memberContext[$user]['additional_groups'] = !empty($profile['additional_groups']) ? getMemberGroups(explode(',', $profile['additional_groups']), $profile['id_member']) : '';
 
 	// First do a quick run through to make sure there is something to be shown.]]></add>
 		</operation>

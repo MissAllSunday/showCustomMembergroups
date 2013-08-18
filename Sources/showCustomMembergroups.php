@@ -88,6 +88,7 @@ function getMemberGroups($userGroups, $user)
 	// Set the order
 	$orderGroups = !empty($modSettings['sCM_groups_ids']) ? explode(',', $modSettings['sCM_groups_ids']) : $userGroups;
 
+	// Use the cache when possible
 	if (($returnedGroups = cache_get_data('sCM_groups-'. $user, 120)) == null)
 	{
 		$request = $smcFunc['db_query']('', '
