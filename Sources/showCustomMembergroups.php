@@ -77,25 +77,29 @@ function sCM_settings(&$return_config = false)
 	prepareDBSettingContext($config_vars);
 }
 
-function getMemberGroups($userGroups)
+function getMemberGroups($userGroups, $user)
 {
 	global $smcFunc, $modSettings, $settings;
 
-	if (empty($userGroups))
+	// Can't do much with empty vars :(
+	if (empty($userGroups) || empty($user))
 		return false;
 
-	$return = array();
+	// Set the order
+	$orderGroups = !empty($modSettings['sCM_groups_ids']) ? explode(',', $modSettings['sCM_groups_ids']) : $userGroups;
 
-	if (($returnedGroups = cache_get_data('sCM_groups', 120)) == null)
+	if (($returnedGroups = cache_get_data('sCM_groups-'. $user, 120)) == null)
 	{
 		$request = $smcFunc['db_query']('', '
 			SELECT id_group, group_name, online_color, stars
 			FROM {db_prefix}membergroups
 			WHERE id_group IN ({array_int:groups})
+				AND id_group IN ({array_int:userGroups})
 				AND id_group != 3
-			ORDER BY id_group',
+			ORDER BY FIELD(id_group, {array_int:groups})',
 			array(
-				'groups' => !empty($modSettings['sCM_groups_ids']) ? explode(',', $modSettings['sCM_groups_ids']) : '',
+				'groups' => $orderGroups,
+				'userGroups' => $userGroups,
 			)
 		);
 
@@ -106,6 +110,7 @@ function getMemberGroups($userGroups)
 			$stars = empty($row['stars']) ? array('', '') : explode('#', $row['stars']);
 
 			$returnedGroups[$row['id_group']] = array(
+				'id' => $row['id_group'],
 				'name' => $row['group_name'],
 				'color' => !empty($row['online_color']) ? $row['online_color'] : '',
 				'star' => $stars[1],
@@ -118,12 +123,8 @@ function getMemberGroups($userGroups)
 		$smcFunc['db_free_result']($request);
 
 		// Cache this beauty
-		cache_put_data('sCM_groups', $returnedGroups, 120);
+		cache_put_data('sCM_groups-'. $user, $returnedGroups, 120);
 	}
 
-	foreach ($userGroups as $group)
-		if (!empty($returnedGroups[$group]))
-			$return[$group] = $returnedGroups[$group];
-
-	return $return;
+	return $returnedGroups;
 }
