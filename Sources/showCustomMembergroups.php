@@ -77,14 +77,12 @@ function sCM_settings(&$return_config = false)
 	prepareDBSettingContext($config_vars);
 }
 
-function getMemberGroups($allGroups, $id_member)
+function getMemberGroups($userGroups)
 {
 	global $smcFunc, $modSettings, $settings;
 
 	if (empty($allGroups) || empty($id_member))
 		return false;
-
-	$groups = !empty($modSettings['sCM_groups_ids']) ? array_intersect(explode(',', $modSettings['sCM_groups_ids']), $allGroups) : $allGroups;
 
 	if (($returnedGroups = cache_get_data('sCM_groups-'. $id_member, 120)) == null)
 	{
@@ -95,7 +93,7 @@ function getMemberGroups($allGroups, $id_member)
 				AND id_group != 3
 			ORDER BY id_group',
 			array(
-				'groups' => $groups,
+				'groups' => !empty($modSettings['sCM_groups_ids']) ? $modSettings['sCM_groups_ids'] : array(),
 			)
 		);
 
@@ -121,5 +119,5 @@ function getMemberGroups($allGroups, $id_member)
 		cache_put_data('sCM_groups-'. $id_member, $returnedGroups, 120);
 	}
 
-	return $returnedGroups;
+	return array_intersect($returnedGroups, $userGroups);
 }
