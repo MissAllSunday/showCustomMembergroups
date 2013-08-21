@@ -8,6 +8,10 @@
 
 	<file name="$sourcedir/Load.php">
 		<operation>
+			<search position="replace"><![CDATA[mem.karma_good, mem.id_post_group, mem.karma_bad, mem.lngfile, mem.id_group, mem.time_offset, mem.show_online,]]></search>
+			<add><![CDATA[mem.karma_good, mem.id_post_group, mem.karma_bad, mem.lngfile, mem.id_group, mem.time_offset, mem.show_online, mem.additional_groups,]]></add>
+		</operation>
+		<operation>
 			<search position="replace"><![CDATA[// First do a quick run through to make sure there is something to be shown.]]></search>
 			<add><![CDATA[// showCustomMembergroups mod
 	global $sourcedir;
