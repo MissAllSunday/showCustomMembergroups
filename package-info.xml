@@ -10,7 +10,7 @@
 		<code>hooks.php</code>
 		<modification>showCustomMembergroups.xml</modification>
 		<require-dir name="Themes" destination="$boarddir">Theme files</require-dir>
-		<require-dir name="Sources" destination="$boarddir">Source files</require-dir>
+		<require-file name="Sources/showCustomMembergroups.php" destination="$sourcedir">Source files</require-dir>
 		<redirect url="$scripturl?action=admin;area=modsettings;sa=sCM" timeout="3000"></redirect>
 	</install>
 
