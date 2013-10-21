@@ -10,7 +10,7 @@
 		<code>hooks.php</code>
 		<modification>showCustomMembergroups.xml</modification>
 		<require-dir name="Themes" destination="$boarddir">Theme files</require-dir>
-		<require-file name="Sources/showCustomMembergroups.php" destination="$sourcedir">Source files</require-dir>
+		<require-file name="Sources/showCustomMembergroups.php" destination="$sourcedir">Source files</require-file>
 		<redirect url="$scripturl?action=admin;area=modsettings;sa=sCM" timeout="3000"></redirect>
 	</install>
 
@@ -20,5 +20,4 @@
 		<remove-file name="$languagedir/showCustomMembergroups.english.php" />
 		<modification reverse="true">showCustomMembergroups.xml</modification>
 	</uninstall>
-
 </package-info>
