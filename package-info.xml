@@ -18,6 +18,8 @@
 		<code>remove.php</code>
 		<remove-file name="$sourcedir/showCustomMembergroups.php" />
 		<remove-file name="$languagedir/showCustomMembergroups.english.php" />
+		<remove-file name="$languagedir/showCustomMembergroups.russian.php" />
+		<remove-file name="$languagedir/showCustomMembergroups.russian-utf8.php" />
 		<modification reverse="true">showCustomMembergroups.xml</modification>
 	</uninstall>
 </package-info>
